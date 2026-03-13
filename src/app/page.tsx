@@ -83,6 +83,7 @@ export default function LandingPage() {
         <div className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
           <a href="#features" className="hover:text-foreground transition-colors">Features</a>
           <a href="#pricing" className="hover:text-foreground transition-colors">Pricing</a>
+          <Link href="/demo" className="hover:text-foreground transition-colors text-primary font-medium">Demo</Link>
           <Link href="/sign-in" className="hover:text-foreground transition-colors">Sign In</Link>
         </div>
         <div className="flex items-center gap-3">
@@ -133,11 +134,11 @@ export default function LandingPage() {
                 Start Free <ArrowRight className="w-4 h-4" />
               </Button>
             </Link>
-            <a href="#features">
+            <Link href="/demo">
               <Button size="lg" variant="outline" className="gap-2 px-8 text-base h-12 border-white/10">
-                <Globe className="w-4 h-4" /> See how it works
+                <Globe className="w-4 h-4" /> View Demo
               </Button>
-            </a>
+            </Link>
           </div>
 
           {/* Trust chips */}
@@ -296,11 +297,18 @@ export default function LandingPage() {
           <p className="text-muted-foreground text-lg">
             Join thousands of SaaS teams using ProductPulse to communicate product changes beautifully.
           </p>
-          <Link href="/sign-up">
-            <Button size="lg" className="gap-2 px-8 text-base h-12 glow">
-              Start for free <ArrowRight className="w-4 h-4" />
-            </Button>
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/sign-up">
+              <Button size="lg" className="gap-2 px-8 text-base h-12 glow">
+                Start for free <ArrowRight className="w-4 h-4" />
+              </Button>
+            </Link>
+            <Link href="/demo">
+              <Button size="lg" variant="outline" className="gap-2 px-8 text-base h-12 border-white/10">
+                <Globe className="w-4 h-4" /> View Demo
+              </Button>
+            </Link>
+          </div>
         </motion.div>
       </section>
 

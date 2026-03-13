@@ -5,25 +5,33 @@ const isPublicRoute = createRouteMatcher([
   "/",
   "/sign-in(.*)",
   "/sign-up(.*)",
+  "/demo(.*)",
   "/pricing",
-  "/p/(.*)",          // public feedback board
-  "/changelog/(.*)",  // public changelog
-  "/roadmap/(.*)",    // public roadmap
-  "/api/widget/(.*)", // embeddable widget API
-  "/api/rss/(.*)",    // RSS feed
+  "/p/(.*)",           // public feedback board
+  "/changelog/(.*)",   // public changelog
+  "/roadmap/(.*)",     // public roadmap
+  "/api/widget/(.*)",  // embeddable widget API
+  "/api/changelog(.*)", // public changelog API for widget
+  "/api/rss/(.*)",     // RSS feed
+  "/api/stripe/webhook(.*)", // Stripe webhooks
 ]);
-
-const isOnboardingRoute = createRouteMatcher(["/onboarding"]);
 
 export default clerkMiddleware(async (auth, req) => {
   const { userId } = await auth();
 
-  if (!isPublicRoute(req)) {
-    if (!userId) {
-      const signInUrl = new URL("/sign-in", req.url);
-      signInUrl.searchParams.set("redirect_url", req.url);
-      return NextResponse.redirect(signInUrl);
-    }
+  // Redirect logged-in users away from sign-in/sign-up to dashboard
+  if (userId && (
+    req.nextUrl.pathname.startsWith("/sign-in") ||
+    req.nextUrl.pathname.startsWith("/sign-up")
+  )) {
+    return NextResponse.redirect(new URL("/dashboard", req.url));
+  }
+
+  // Protect private routes — redirect unauthenticated users to sign-in
+  if (!isPublicRoute(req) && !userId) {
+    const signInUrl = new URL("/sign-in", req.url);
+    signInUrl.searchParams.set("redirect_url", req.nextUrl.pathname);
+    return NextResponse.redirect(signInUrl);
   }
 
   return NextResponse.next();
