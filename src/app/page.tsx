@@ -78,7 +78,7 @@ export default function LandingPage() {
           <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary">
             <Zap className="w-4 h-4 text-white" />
           </div>
-          <span className="font-bold text-lg">ProductPulse</span>
+          <span className="font-bold text-lg">ProductPulse AI</span>
         </div>
         <div className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
           <a href="#features" className="hover:text-foreground transition-colors">Features</a>
@@ -91,53 +91,88 @@ export default function LandingPage() {
           </Link>
           <Link href="/sign-up">
             <Button size="sm" className="gap-1.5">
-              Get Started <ArrowRight className="w-3.5 h-3.5" />
+              Start Free <ArrowRight className="w-3.5 h-3.5" />
             </Button>
           </Link>
         </div>
       </nav>
 
       {/* Hero */}
-      <section className="relative px-6 pt-24 pb-20 text-center max-w-5xl mx-auto">
-        {/* Glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-primary/20 rounded-full blur-[120px] pointer-events-none" />
+      <section className="relative px-6 pt-20 pb-0 text-center overflow-hidden">
+        {/* Background glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-primary/15 rounded-full blur-[140px] pointer-events-none" />
 
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className="relative space-y-6"
+          transition={{ duration: 0.6 }}
+          className="relative max-w-4xl mx-auto space-y-6"
         >
+          {/* Label */}
           <Badge className="bg-primary/20 text-primary border-primary/30 gap-1.5 px-4 py-1.5">
             <Sparkles className="w-3.5 h-3.5" /> AI-Powered Product Communication
           </Badge>
 
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-none">
-            The product hub your{" "}
-            <span className="gradient-text">users will love</span>
+          {/* Main headline — what does it do? */}
+          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.05]">
+            Manage feedback,{" "}
+            <span className="gradient-text">roadmap & changelog</span>{" "}
+            in one place.
           </h1>
 
+          {/* Subheadline — who is it for + why useful */}
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Collect feedback, manage your roadmap, publish AI-generated changelogs,
-            and track feature adoption — all in one beautiful platform.
+            SaaS teams use ProductPulse to collect feature requests, prioritize ideas with voting,
+            and share updates with users — automatically powered by AI.
           </p>
 
+          {/* CTAs */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-2">
             <Link href="/sign-up">
-              <Button size="lg" className="gap-2 px-8 text-base h-12 glow">
-                Start for free <ArrowRight className="w-4 h-4" />
+              <Button size="lg" className="gap-2 px-8 text-base h-12 glow font-semibold">
+                Start Free <ArrowRight className="w-4 h-4" />
               </Button>
             </Link>
-            <Link href="#features">
+            <a href="#features">
               <Button size="lg" variant="outline" className="gap-2 px-8 text-base h-12 border-white/10">
-                See how it works
+                <Globe className="w-4 h-4" /> See how it works
               </Button>
-            </Link>
+            </a>
           </div>
 
-          <p className="text-xs text-muted-foreground">
-            No credit card required · Free plan forever · 2-minute setup
-          </p>
+          {/* Trust chips */}
+          <div className="flex flex-wrap items-center justify-center gap-3 text-xs text-muted-foreground pt-1">
+            {["No credit card required", "Free plan forever", "2-minute setup", "Multi-tenant"].map(t => (
+              <span key={t} className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-green-500" /> {t}
+              </span>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Dashboard screenshot */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="relative mt-16 max-w-6xl mx-auto"
+        >
+          {/* Fade to bottom */}
+          <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none" />
+          {/* Screenshot frame */}
+          <div className="rounded-2xl border border-white/10 overflow-hidden shadow-2xl shadow-primary/10 glow">
+            <div className="flex items-center gap-2 px-4 py-3 bg-white/5 border-b border-white/10">
+              <div className="w-3 h-3 rounded-full bg-red-500/60" />
+              <div className="w-3 h-3 rounded-full bg-yellow-500/60" />
+              <div className="w-3 h-3 rounded-full bg-green-500/60" />
+              <span className="ml-3 text-xs text-muted-foreground font-mono">app.productpulse.ai/dashboard</span>
+            </div>
+            <img
+              src="/dashboard-preview.png"
+              alt="ProductPulse AI Dashboard — Feedback board, roadmap, and changelog in one view"
+              className="w-full object-cover"
+            />
+          </div>
         </motion.div>
       </section>
 

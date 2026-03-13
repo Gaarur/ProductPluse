@@ -111,21 +111,26 @@
 
   async function fetchEntries() {
     try {
-      const res = await fetch(\`\${appUrl}/api/changelog?companyId=\${companyId}&published=true\`);
-      const data = await res.json();
-      const feed = document.getElementById('productpulse-feed');
-      
+      var url = appUrl + '/api/changelog?companyId=' + companyId + '&published=true';
+      var res = await fetch(url);
+      var data = await res.json();
+      var feed = document.getElementById('productpulse-feed');
+
       if (data.changelogs && data.changelogs.length > 0) {
-        feed.innerHTML = data.changelogs.slice(0, 5).map(item => `
-          <div class="pp-item">
-            <div class="pp-title">\${item.title}</div>
-            <div class="pp-content">\${item.content.substring(0, 100)}\${item.content.length > 100 ? '...' : ''}</div>
-            <div class="pp-date">\${new Date(item.createdAt).toLocaleDateString()}</div>
-          </div>
-        `).join('');
+        var html = '';
+        data.changelogs.slice(0, 5).forEach(function(item) {
+          var preview = item.content.length > 100 ? item.content.substring(0, 100) + '...' : item.content;
+          var date = new Date(item.createdAt).toLocaleDateString();
+          html += '<div class="pp-item">';
+          html += '<div class="pp-title">' + item.title + '</div>';
+          html += '<div class="pp-content">' + preview + '</div>';
+          html += '<div class="pp-date">' + date + '</div>';
+          html += '</div>';
+        });
+        feed.innerHTML = html;
         loaded = true;
       } else {
-        feed.innerHTML = '<div style="color: #666; text-align: center; margin-top: 40px;">No updates yet.</div>';
+        feed.innerHTML = '<div style="color:#666;text-align:center;margin-top:40px">No updates yet.</div>';
       }
     } catch (err) {
       document.getElementById('productpulse-feed').innerHTML = 'Failed to load updates.';
